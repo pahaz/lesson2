@@ -1,7 +1,11 @@
-# -*- encoding: utf-8 -*-
-from __future__ import nested_scopes, generators, division, absolute_import, \
-    with_statement, print_function, unicode_literals
-from builtins import *  # noqa
+import http.server
+import socketserver
 
-__author__ = 'pahaz'
+PORT = 8000
 
+Handler = http.server.SimpleHTTPRequestHandler
+
+httpd = socketserver.TCPServer(("", PORT), Handler)
+
+print("serving at port", PORT)
+httpd.serve_forever()
