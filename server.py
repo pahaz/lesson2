@@ -1,11 +1,5 @@
-import http.server
-import socketserver
+from wsgiref.simple_server import make_server, demo_app
 
-PORT = 8000
-
-Handler = http.server.SimpleHTTPRequestHandler
-
-httpd = socketserver.TCPServer(("", PORT), Handler)
-
-print("serving at port", PORT)
+httpd = make_server('', 8001, demo_app)
+print("Listening on port 8001....")
 httpd.serve_forever()
