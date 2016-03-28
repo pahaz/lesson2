@@ -10,6 +10,15 @@ def application(environ, start_response):
 
     GET = parse_http_get_data(environ)
     name = get_first_element(GET, "name", '')
+    message = get_first_element(GET, "message", '')
+
+    if message:
+        db.messages.append({'name': name, 'message': message})
+        start_response('302 Found', [
+            ('Content-Type', 'text/html'),
+            ('Location', '/')])
+        return [b'']
+
     response_body = response_template.format(
         name=name,
         messages=db.messages)
