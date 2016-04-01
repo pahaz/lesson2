@@ -46,7 +46,7 @@ def parse_http_headers(environ):
     return h
 
 
-def parse_http_uri(environ):
+def parse_http_path(environ):
     return request_uri(environ)
 
 
