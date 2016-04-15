@@ -25,13 +25,13 @@ class BaseHandler(object):
 
     def resolve(self, request_path):
         # TODO: write code here
+        args = tuple()
+        kwargs = {}
 
         from minidjango.conf import settings
         if request_path in settings.ROUTER:
-            return settings.ROUTER[request_path]
+            return settings.ROUTER[request_path], args, kwargs
 
-        args = tuple()
-        kwargs = {}
 
         def index(request):
             return HttpResponse(b'HI!')
@@ -142,27 +142,7 @@ class BaseHandler(object):
         raise
 
     def handle_uncaught_exception(self, request, exc_info):
-        """
-        Processing for any otherwise uncaught exceptions (those that will
-        generate HTTP 500 responses). Can be overridden by subclasses who want
-        customised 500 handling.
-
-        Be *very* careful when overriding this because the error could be
-        caused by anything, so assuming something like the database is always
-        available would be an error.
-        """
-        if settings.PROPAGATE_EXCEPTIONS:
-            raise
-
-        logger.error('Internal Server Error: %s', request.path,
-                     exc_info=exc_info,
-                     extra={
-                         'status_code': 500,
-                         'request': request
-                     }
-                     )
-
-        return callback(request, **param_dict)
+        raise
 
     def get_exception_response(self, request, param, exc):
         pass
