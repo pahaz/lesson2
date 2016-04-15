@@ -13,7 +13,6 @@ logger = logging.getLogger('minidjango.request')
 
 class WSGIHandler(BaseHandler):
     init_lock = Lock()
-    request_class = HttpRequest
 
     def __call__(self, environ, start_response):
         # Set up middleware if needed. We couldn't do this earlier, because
@@ -30,7 +29,7 @@ class WSGIHandler(BaseHandler):
                     raise
 
         try:
-            request = self.request_class(environ)
+            request = HttpRequest(environ)
         except UnicodeDecodeError:
             logger.warning('Bad Request (UnicodeDecodeError)',
                 exc_info=sys.exc_info(),

@@ -15,7 +15,7 @@ class RequestTestCase(unittest.TestCase):
         self.assertEqual(list(request.POST.keys()), [])
         self.assertEqual(list(request.COOKIES.keys()), [])
         self.assertFalse(
-            {'PATH_INFO', 'REQUEST_METHOD', 'CONTENT_TYPE',
+            {'PATH_INFO', 'REQUEST_METHOD',
              'wsgi.input'} - set(request.META.keys())
         )
         self.assertEqual(request.META['PATH_INFO'], path)
@@ -78,7 +78,6 @@ class RequestTestCase(unittest.TestCase):
         self.assertEqual(request.read(2), b'na')
         with self.assertRaises(RequestParseError):
             request.body
-        self.assertEqual(request.POST, {})
 
     def request(self, environ):
         setup_testing_defaults(environ)

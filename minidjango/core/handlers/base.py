@@ -27,11 +27,10 @@ class BaseHandler(object):
         # TODO: write code here
         args = tuple()
         kwargs = {}
-
         from minidjango.conf import settings
+
         if request_path in settings.ROUTER:
             return settings.ROUTER[request_path], args, kwargs
-
 
         def index(request):
             return HttpResponse(b'HI!')
@@ -131,14 +130,6 @@ class BaseHandler(object):
         return response
 
     def process_exception_by_middleware(self, exception, request):
-        """
-        Pass the exception to the exception middleware. If no middleware
-        return a response for this exception, raise it.
-        """
-        for middleware_method in self._exception_middleware:
-            response = middleware_method(request, exception)
-            if response:
-                return response
         raise
 
     def handle_uncaught_exception(self, request, exc_info):

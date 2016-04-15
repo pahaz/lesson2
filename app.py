@@ -1,6 +1,5 @@
 import gitdata.local as db
 from minidjango.http import HttpResponse
-
 db.load(['messages'])
 
 from minidjango.core.wsgi import get_wsgi_application
