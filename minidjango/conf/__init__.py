@@ -5,6 +5,8 @@ _default = dict(
     MIDDLEWARE_CLASSES=[],
     DEFAULT_CONTENT_TYPE='text/html',
     DEFAULT_CHARSET='utf-8',
+    PROPAGATE_EXCEPTIONS=True,
+    ROUTER={},
 )
 
 

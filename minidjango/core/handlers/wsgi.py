@@ -4,9 +4,7 @@ import logging
 import sys
 from threading import Lock
 
-from django import http
-from django.core import signals
-
+from minidjango import http
 from minidjango.core.handlers.base import BaseHandler
 from minidjango.http.request import HttpRequest
 
@@ -31,7 +29,6 @@ class WSGIHandler(BaseHandler):
                     self._middleware = None
                     raise
 
-        signals.request_started.send(sender=self.__class__, environ=environ)
         try:
             request = self.request_class(environ)
         except UnicodeDecodeError:
