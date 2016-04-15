@@ -52,14 +52,6 @@ class BaseHandler(object):
                 callback, callback_args, callback_kwargs = resolver_match
                 request.resolver_match = resolver_match
 
-                # Apply view middleware
-                for middleware in self._middleware:
-                    response = middleware.process_view(
-                        request, callback, callback_args, callback_kwargs
-                    )
-                    if response:
-                        break
-
             if response is None:
                 try:
                     response = callback(
@@ -130,6 +122,10 @@ class BaseHandler(object):
         return response
 
     def process_exception_by_middleware(self, exception, request):
+        for middleware in self._middleware:
+            response = middleware.process_exception(request, exception)
+            if response:
+                return response
         raise
 
     def handle_uncaught_exception(self, request, exc_info):
